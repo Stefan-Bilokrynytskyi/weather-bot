@@ -1,0 +1,21 @@
+{
+  "name": "weather-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/weather-bot-main.js"
+  },
+  "author": "Stefan-Mykhailo Bilokrynytskyi",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.2.1",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.0.1",
+    "node-fetch": "^2.6.6",
+    "node-telegram-bot-api": "^0.60.0",
+    "nodemon": "^2.0.20",
+    "telegraf": "^4.8.4"
+  }
+}
