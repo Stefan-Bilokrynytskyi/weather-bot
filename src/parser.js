@@ -134,4 +134,19 @@ class weekParser extends Parser {
   };
 }
 
-module.exports = { todayParser, tomorrowParser, weekParser };
+class peopleParser extends Parser {
+  constructor() {
+    super();
+  }
+
+  parse = async () => {
+    const data = await axios.get(`https://ua.sinoptik.ua/`).then((html) => {
+      const $ = cheerio.load(html.data);
+
+      return $('#bd1c > div.oDescription.clearfix > div.rSide > div').text();
+    });
+    return data;
+  };
+}
+
+module.exports = { todayParser, tomorrowParser, weekParser, peopleParser };

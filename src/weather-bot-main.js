@@ -2,7 +2,12 @@
 
 const { Telegraf } = require('telegraf');
 
-const { todayParser, tomorrowParser, weekParser } = require('./parser.js');
+const {
+  todayParser,
+  tomorrowParser,
+  weekParser,
+  peopleParser,
+} = require('./parser.js');
 const { MyDate } = require('./date.js');
 require('dotenv').config();
 
@@ -12,16 +17,19 @@ const date = new MyDate();
 const tdyParser = new todayParser();
 const tmrwParser = new tomorrowParser();
 const wParser = new weekParser();
+const pParser = new peopleParser();
 
 bot.start((ctx) => ctx.reply('Welcome'));
 
 bot.help((ctx) => {
   ctx.reply(
-    '/today + назва міста – погода у цьому місту сьогодні\n' +
-      '/tmrw + назва міста – погода у цьому місту завтра\n' +
-      '/week + назва міста – погода у цьому місту на наступні 7 днів\n'
+    '/today + назва міста – погода у цьому місті сьогодні\n' +
+      '/tmrw + назва міста – погода у цьому місті завтра\n' +
+      '/week + назва міста – погода у цьому місті на наступні 7 днів\n' +
+      '/narodnyi_prognoz  – народний прогноз\n'
   );
 });
+
 bot.command('today', async (ctx) => {
   try {
     const input = ctx.message.text.split(' ').slice(1).join(' ');
@@ -83,6 +91,19 @@ bot.command('week', async (ctx) => {
         ` ${week[i]}, ${cityName} буде від ${min[i]}С до ${max[i]}С.\n` +
         `${skyDescription[i]} \n`;
     }
+    ctx.reply(text, { reply_to_message_id: ctx.message.message_id });
+  } catch (err) {
+    console.log(err.message);
+    ctx.reply('Не можу знайти це місто', {
+      reply_to_message_id: ctx.message.message_id,
+    });
+  }
+});
+
+bot.command('narodnyi_prognoz', async (ctx) => {
+  try {
+    const description = await pParser.parse();
+    const text = `${description}`;
     ctx.reply(text, { reply_to_message_id: ctx.message.message_id });
   } catch (err) {
     console.log(err.message);
