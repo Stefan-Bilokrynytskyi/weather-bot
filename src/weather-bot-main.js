@@ -102,7 +102,7 @@ bot.command('week', async (ctx) => {
 
 bot.command('narodnyi_prognoz', async (ctx) => {
   try {
-    const description = await pParser.parse();
+    const description = await pParser.parse('PEOPLE_PROG');
     const text = `${description}`;
     ctx.reply(text, { reply_to_message_id: ctx.message.message_id });
   } catch (err) {

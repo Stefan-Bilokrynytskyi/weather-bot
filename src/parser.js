@@ -14,6 +14,7 @@ class Parser {
         '#bd1c > div.wMain.clearfix > div.lSide > div.imgBlock > p.today-temp',
       MIN_TEMP_TMRW: '#bd2 > div.temperature > div.min > span',
       MAX_TEMP_TMRW: '#bd2 > div.temperature > div.max > span',
+      PEOPLE_PROG: '#bd1c > div.oDescription.clearfix > div.rSide > div',
     };
   }
 
@@ -135,15 +136,17 @@ class weekParser extends Parser {
 }
 
 class peopleParser extends Parser {
+  #weatherData;
   constructor() {
     super();
+    this.#weatherData = super.weatherData;
   }
 
-  parse = async () => {
+  parse = async (type) => {
     const data = await axios.get(`https://ua.sinoptik.ua/`).then((html) => {
       const $ = cheerio.load(html.data);
 
-      return $('#bd1c > div.oDescription.clearfix > div.rSide > div').text();
+      return $(this.#weatherData[type]).text();
     });
     return data;
   };
