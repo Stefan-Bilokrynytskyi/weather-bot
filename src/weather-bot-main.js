@@ -9,9 +9,9 @@ const {
   peopleParser,
 } = require('./parser.js');
 const { MyDate } = require('./date.js');
-require('dotenv').config();
+const BOT_TOKEN = require('../bot_token');
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf(BOT_TOKEN);
 
 const date = new MyDate();
 const tdyParser = new todayParser();
